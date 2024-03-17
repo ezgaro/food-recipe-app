@@ -1,4 +1,6 @@
+// This file is responsible for fetching the data from the spoonacular API
 const apiKey = process.env.API_KEY;
+// This function is responsible for fetching the recipes from the spoonacular API
 const searchRecipes = async (searchTerm: string, page: number) => {
   if(!apiKey) {
     throw new Error('API key not find');
@@ -24,5 +26,29 @@ const searchRecipes = async (searchTerm: string, page: number) => {
     throw error;
   }
 };
+// This function is responsible for fetching the recipe summary from the spoonacular API
+const getRecipeSummary = async (recipeId: string) => {
+  if(!apiKey) {
+    throw new Error('API key not find');
+  }
 
-export { searchRecipes };
+  const url = new URL(`https://api.spoonacular.com/recipes/${recipeId}/summary`);
+  url.search = new URLSearchParams({ apiKey: apiKey }).toString();
+
+  try {
+    const response = await fetch(url.toString());
+    const resultJSON = await response.json();
+    return resultJSON;
+  } catch (error) {
+    console.error('Error getting recipe summary', error);
+    throw error;
+  }
+};
+
+const favouriteRecipe = async (recipeId: string) => {
+  // This is where you would save the recipe to the database
+  console.log(`Favouriting recipe with id ${recipeId}`);
+  return { status: 'success' };
+}
+
+export { searchRecipes, getRecipeSummary};

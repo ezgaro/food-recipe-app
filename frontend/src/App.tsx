@@ -3,11 +3,13 @@ import './App.css';
 import * as api from './api';
 import { Recipe } from './types';
 import RecipeCard from './components/RecipeCard';
+import { RecipeModal } from './components/RecipeModal';
 
 
 const App = () => {
   const[searchTerm, setSearchTerm] = useState<string>(''); // Good practise to set the type of the state
   const[recipes, setRecipes] = useState<Recipe[]>([]); // We recieve array of recipes frm the serched term
+  const[selectedRecipe, setSelectedRecipe] = useState<Recipe | undefined>(undefined); // We recieve the summary of the recipe from the recipe id
   const pageNumber = useRef(1); // We use useRef to keep track of the page number without re-rendering the component
   const handleSearchSubmit = async (e: FormEvent) => { // We handle the search submit
     e.preventDefault(); // We prevent the default behaviour of the form
@@ -19,7 +21,6 @@ const App = () => {
       console.error(error);
     }
   };
-
 const handleViewMoreClick = async () => {
   const nextPageNumber = pageNumber.current + 1; // We increment the page number
   try {
@@ -42,16 +43,15 @@ const handleViewMoreClick = async () => {
       onChange={(e) => setSearchTerm(e.target.value)} /> {/*Making the form input dynamic*/}
     <button type='submit'>Submit</button>
     </form>
-    <div className='recipes'>
       {recipes.map((recipe) => (
-        <RecipeCard key={recipe.id} recipe={recipe} />
+        <RecipeCard key={recipe.id} recipe={recipe} onClick={() => setSelectedRecipe(recipe)}/>
       ))}
       <button
       className='view-more-button'
       onClick={() => handleViewMoreClick()}
        >View More</button>
-    </div>
+       {selectedRecipe ? <RecipeModal recipeId ={selectedRecipe.id.toString()} onClose={() => setSelectedRecipe(undefined)}/> : null}
   </div>
-  )
+  );
 }
 export default App;
