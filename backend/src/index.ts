@@ -38,6 +38,36 @@ app.post('/api/recipes/favourite', async (req, res) => {
   }
 }); //create a route for the server
 
+app.get("/api/recipes/favourite", async (req, res)=>{
+  // GET http://localhost:5000/api/recipes/favourite
+  try {
+    const recipes = await prismaClient.favouriteRecipes.findMany(); // get all the favourite recipes from the database
+    const recipeIds = recipes.map((recipe) => recipe.recipeId.toString()); //get the recipeIds from the favourite recipes
+    const favourites = await RecipeAPI.getFavouriteRecipesByIDs(recipeIds); //get the favourite recipes from the spoonacular API
+    return res.json(favourites); //return the favourite recipes
+  } catch (error) {
+    console.error("Error getting favourite recipes", error);
+    return res.status(500).json({error: "Error getting favourite recipes"}); //return an error if the recipes are not found
+  }
+});
+
+// This route is responsible for deleting a recipe from the database
+app.delete('/api/recipes/favourite', async (req, res) => {
+  // DELETE http://localhost:5000/api/recipes/favourite
+  const recipeId = req.body.recipeId; // We use req.body to get the recipeId from the body of the request
+  try {
+    await prismaClient.favouriteRecipes.delete({
+      where: {
+        recipeId: recipeId //delete the favourite recipe from the database
+      }
+    });
+    return res.status(204).json({}); //return an empty response
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: 'Ooops, something went wrong' }); //return an error if the recipe is not deleted
+  }
+});
+
 app.listen(5000, () => {
   console.log("Server is running on port 5000");
 }); //start the server on port 5000

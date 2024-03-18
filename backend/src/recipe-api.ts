@@ -28,6 +28,7 @@ const searchRecipes = async (searchTerm: string, page: number) => {
 };
 // This function is responsible for fetching the recipe summary from the spoonacular API
 const getRecipeSummary = async (recipeId: string) => {
+  // This function is responsible for fetching the recipe summary from the spoonacular API
   if(!apiKey) {
     throw new Error('API key not find');
   }
@@ -45,10 +46,26 @@ const getRecipeSummary = async (recipeId: string) => {
   }
 };
 
-const favouriteRecipe = async (recipeId: string) => {
-  // This is where you would save the recipe to the database
-  console.log(`Favouriting recipe with id ${recipeId}`);
-  return { status: 'success' };
+// Function to get favourite recipes from the database
+// https://spoonacular.com/food-api/docs#Get-Recipe-Information-Bulk
+const getFavouriteRecipesByIDs = async (ids: string[]) => {
+  if(!apiKey) {
+    throw new Error('API key not found');
+  }
+
+  const url = new URL("https://api.spoonacular.com/recipes/informationBulk");
+
+  const params = {
+    apiKey,
+    ids: ids.join(","),
+  };
+
+  url.search = new URLSearchParams(params).toString();
+
+  const searchResponse = await fetch(url);
+  const json = await searchResponse.json();
+
+  return {result: json};
 }
 
-export { searchRecipes, getRecipeSummary};
+export { searchRecipes, getRecipeSummary, getFavouriteRecipesByIDs};
