@@ -3,7 +3,8 @@ const apiKey = process.env.API_KEY;
 // This function is responsible for fetching the recipes from the spoonacular API
 const searchRecipes = async (searchTerm: string, page: number) => {
   if(!apiKey) {
-    throw new Error('API key not find');
+    throw new Error('API key not find'
+    );
   }
 
   const url = new URL("https://api.spoonacular.com/recipes/complexSearch");//base url
