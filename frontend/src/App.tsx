@@ -4,7 +4,7 @@ import * as api from "./api";
 import { Recipe } from "./types";
 import RecipeCard from "./components/RecipeCard";
 import { RecipeModal } from "./components/RecipeModal";
-import { AiOutlineSearch } from "/home/stefan/Documents/recipe-app/food-recipe-app/backend/node_modules/react-icons/ai";
+import { AiOutlineSearch } from "react-icons/ai";
 
 type Tabs = "search" | "favourites"; // We create a type for the tabs
 

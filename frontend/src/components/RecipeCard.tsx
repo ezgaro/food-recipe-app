@@ -1,6 +1,6 @@
 import { Recipe } from "../types";
-import { AiOutlineHeart } from "/home/stefan/Documents/recipe-app/food-recipe-app/backend/node_modules/react-icons/ai"; // We import the heart icon from react-icons/ai
-import { AiFillHeart } from "/home/stefan/Documents/recipe-app/food-recipe-app/backend/node_modules/react-icons/ai"; // We import the filled heart icon from react-icons/ai
+import { AiOutlineHeart } from "react-icons/ai"; // We import the heart icon from react-icons/ai
+import { AiFillHeart } from "react-icons/ai"; // We import the filled heart icon from react-icons/ai
 
 interface Props {
   recipe: Recipe;
