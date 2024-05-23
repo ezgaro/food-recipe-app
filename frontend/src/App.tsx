@@ -5,6 +5,7 @@ import { Recipe } from "./types";
 import RecipeCard from "./components/RecipeCard";
 import { RecipeModal } from "./components/RecipeModal";
 import { AiOutlineSearch } from "react-icons/ai";
+// This file is the main component of the application. It contains the search form, the recipe grid, the view more button, the favourites tab, the favourites grid, and the recipe modal.
 
 type Tabs = "search" | "favourites"; // We create a type for the tabs
 

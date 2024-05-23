@@ -1,4 +1,5 @@
 import { Recipe } from "./types";
+// This file contains the API functions that will be used to fetch the recipes from the backend server. We have the following functions:
 
 
 export const searchRecipes = async (searchTerm: string, page: number) => {

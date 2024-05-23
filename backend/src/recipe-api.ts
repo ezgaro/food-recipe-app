@@ -1,20 +1,18 @@
 // This file is responsible for fetching the data from the spoonacular API
 const apiKey = process.env.API_KEY;
-// This function is responsible for fetching the recipes from the spoonacular API
+
 const searchRecipes = async (searchTerm: string, page: number) => {
   if(!apiKey) {
-    throw new Error('API key not find'
-    );
+    throw new Error('API key not find');
   }
 
-  const url = new URL("https://api.spoonacular.com/recipes/complexSearch");//base url
+  const url = new URL("https://api.spoonacular.com/recipes/complexSearch");
   const queryParams = {
     apiKey: apiKey,
     query: searchTerm,
     number: "10",
-    offset: ((page - 1) * 10).toString() // Adding from which page we are fetching the data(they are starting from 0)
+    offset: ((page - 1) * 10).toString()
   }
-  //URLSearchParams is taking an object an presenting it as a query string(apiKey=123&query=burger&number=10&offset=0)
   url.search = new URLSearchParams(queryParams).toString();
 
 
@@ -29,7 +27,6 @@ const searchRecipes = async (searchTerm: string, page: number) => {
 };
 // This function is responsible for fetching the recipe summary from the spoonacular API
 const getRecipeSummary = async (recipeId: string) => {
-  // This function is responsible for fetching the recipe summary from the spoonacular API
   if(!apiKey) {
     throw new Error('API key not find');
   }
